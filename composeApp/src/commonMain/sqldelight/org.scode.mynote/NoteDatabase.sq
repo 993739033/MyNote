@@ -1,0 +1,38 @@
+import org.scode.mynote.bean.ExtraData;
+
+-- DROP TABLE  IF EXISTS NoteData;
+
+CREATE TABLE IF NOT EXISTS NoteData (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT ,
+    name TEXT NOT NULL,
+    createTime TEXT NOT NULL,
+    lastTime TEXT NOT NULL,
+    noteType TEXT AS ExtraData NOT NULL,
+    noteData TEXT NOT NULL
+);
+
+
+
+-- (name=?,createTime,lastTime,noteType,noteData) (?,?,?,?,?)
+updateNote:
+UPDATE NoteData SET name = :name,createTime = :createTime,
+lastTime = :lastTime,noteType = :noteType,noteData = :noteData WHERE id = :id;
+
+createNote:
+INSERT INTO NoteData(name,createTime,lastTime,noteType,noteData)
+ VALUES(?,?,?,?,?);
+
+
+
+removeAll:
+DELETE FROM NoteData;
+
+removeNoteById:
+DELETE FROM NoteData WHERE id = ?;
+
+queryAll:
+SELECT * FROM NoteData;
+
+queryById:
+SELECT * FROM NoteData WHERE id = ?;
+
