@@ -4,7 +4,7 @@
 
 
 ![image](./picture/p1.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/p2.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/p3.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/p4.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/p5.png)
+![image](./picture/p2.png)
+![image](./picture/p3.png)
+![image](./picture/p4.png)
+![image](./picture/p5.png)
