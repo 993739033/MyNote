@@ -86,6 +86,10 @@ class DetailModel(
             historyUseCase.createHistoryData(note)
                 .onSuccess {
                     setEffect { DetailContract.Effect.showToast("Title:${note.name}\n 数据新建成功!") }
+                    coroutineScope.launch {
+                        delay(800)
+                        setEffect { DetailContract.Effect.back }
+                    }
                 }
                 .onFailure {
                     println(it.message + " " + it.cause)

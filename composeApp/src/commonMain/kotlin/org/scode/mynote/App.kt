@@ -30,7 +30,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import org.company.app.utils.SettingKey
+import org.company.app.utils.SettingUtil
 import org.scode.mynote.config.Config
+import org.scode.mynote.config.ThemeType
 import org.scode.mynote.theme.AppTheme
 import org.scode.mynote.theme.LocalThemeIsDark
 import org.scode.mynote.ui.screen.main.AppScreen
@@ -41,6 +45,27 @@ import org.scode.mynote.ui.screen.main.MainScreen
 internal fun App() {
     val themeState = Config._themeConfig.collectAsState()
     val darkState = Config._isDark.collectAsState()
+    LaunchedEffect(Unit) {
+        launch {
+            Config._isDark.collect({
+                SettingUtil.put(SettingKey.isDark, it)
+            })
+        }
+
+        launch {
+            Config._themeConfig.collect({
+                var theme = when (it) {
+                    ThemeType.PURPLE -> "purple"
+                    ThemeType.GREEN -> "green"
+                    ThemeType.ORANGE -> "orange"
+                    ThemeType.BLUE -> "blue"
+                }
+                SettingUtil.put(SettingKey.themeType, theme)
+            })
+        }
+    }
+
+
     AppTheme(
         darkTheme = darkState.value,
         themeType = themeState.value

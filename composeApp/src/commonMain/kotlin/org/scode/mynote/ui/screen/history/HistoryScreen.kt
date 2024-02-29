@@ -33,7 +33,6 @@ import org.scode.mynote.view.LoadingView
 
 //已保存数据
 class HistoryScreen : BaseScreen() {
-
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     override fun CreateContent(nav: Navigator) {
