@@ -15,11 +15,151 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.scode.mynote.config.ThemeType
+
+
+// dark palettes
+val DarkGreenColorPalette = darkColorScheme(
+    primary = green500,
+    primaryContainer = green200,
+    onPrimaryContainer = green700,
+    secondary = teal200,
+    secondaryContainer = green700,
+    onSecondaryContainer = Color.Black,
+    background = bg_dark,
+    surface = Color.Black,
+    surfaceVariant = Color.Black,
+    onPrimary = Color.Black,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onSurfaceVariant = Color.White,
+    error = Color.Red,
+)
+
+val DarkPurpleColorPalette = darkColorScheme(
+    primary = purple200,
+    primaryContainer = purple700,
+    secondary = teal200,
+    secondaryContainer = purple700,
+    onSecondaryContainer = Color.White,
+    background = bg_dark,
+    surface = Color.Black,
+    surfaceVariant = Color.Black,
+    onPrimary = Color.Black,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onSurfaceVariant = Color.White,
+    error = Color.Red,
+)
+
+val DarkBlueColorPalette = darkColorScheme(
+    primary = blue200,
+    primaryContainer = blue700,
+    secondary = teal200,
+    secondaryContainer = blue700,
+    onSecondaryContainer = Color.White,
+    background = bg_dark,
+    surface = Color.Black,
+    surfaceVariant = Color.Black,
+    onPrimary = Color.Black,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onSurfaceVariant = Color.White,
+    error = Color.Red,
+)
+
+val DarkOrangeColorPalette = darkColorScheme(
+    primary = orange200,
+    primaryContainer = orange700,
+    secondary = teal200,
+    secondaryContainer = orange700,
+    onSecondaryContainer = Color.White,
+    background = bg_dark,
+    surface = Color.Black,
+    surfaceVariant = Color.Black,
+    onPrimary = Color.Black,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onSurfaceVariant = Color.White,
+    error = Color.Red,
+)
+
+// Light pallets
+val LightGreenColorPalette = lightColorScheme(
+    primary = green500,
+    primaryContainer = green200,
+    onPrimaryContainer = green700,
+    secondary = teal200,
+    secondaryContainer = green700,
+    onSecondaryContainer = Color.White,
+    background = bg_light,
+    surface = Color.White,
+    surfaceVariant = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+    onSurfaceVariant = Color.Black
+)
+
+val LightPurpleColorPalette = lightColorScheme(
+    primary = purple,
+    primaryContainer = purple700,
+    secondary = teal200,
+    secondaryContainer = purple700,
+    onSecondaryContainer = Color.White,
+    background = bg_light,
+    surface = Color.White,
+    surfaceVariant = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+    onSurfaceVariant = Color.Black,
+)
+
+val LightBlueColorPalette = lightColorScheme(
+    primary = blue500,
+    primaryContainer = blue700,
+    secondary = teal200,
+    secondaryContainer = blue700,
+    onSecondaryContainer = Color.White,
+    background = bg_light,
+    surface = Color.White,
+    surfaceVariant = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+    onSurfaceVariant = Color.Black,
+)
+
+val LightOrangeColorPalette = lightColorScheme(
+    primary = orange500,
+    primaryContainer = orange700,
+    secondary = teal200,
+    secondaryContainer = orange700,
+    onSecondaryContainer = Color.White,
+    background = bg_light,
+    surface = Color.White,
+    surfaceVariant = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+    onSurfaceVariant = Color.Black,
+)
+
 
 private val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -105,17 +245,32 @@ internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
 
 @Composable
 internal fun AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    themeType: ThemeType = ThemeType.PURPLE,
     content: @Composable() () -> Unit
 ) {
-    val systemIsDark = isSystemInDarkTheme()
+    val systemIsDark = darkTheme
     val isDarkState = remember { mutableStateOf(systemIsDark) }
     CompositionLocalProvider(
         LocalThemeIsDark provides isDarkState
     ) {
         val isDark by isDarkState
         SystemAppearance(!isDark)
+
+        val colors = when (themeType) {
+            ThemeType.GREEN -> if (darkTheme) DarkGreenColorPalette else LightGreenColorPalette
+            ThemeType.PURPLE -> if (darkTheme) DarkPurpleColorPalette else LightPurpleColorPalette
+            ThemeType.ORANGE -> if (darkTheme) DarkOrangeColorPalette else LightOrangeColorPalette
+            ThemeType.BLUE -> if (darkTheme) DarkBlueColorPalette else LightBlueColorPalette
+            else -> {
+                if (darkTheme)
+                    DarkGreenColorPalette
+                else LightGreenColorPalette
+            }
+        }
+
         MaterialTheme(
-            colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
+            colorScheme = colors,
             typography = AppTypography,
             shapes = AppShapes,
             content = {

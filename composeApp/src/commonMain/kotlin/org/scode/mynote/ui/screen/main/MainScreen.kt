@@ -4,16 +4,11 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
@@ -44,23 +39,32 @@ class MainScreen : BaseScreen() {
         TabNavigator(tab = HistoryTab) {
             Scaffold(
                 topBar = {
-                    TopAppBar(title = { Text(text = it.current.options.title) }, actions = {
-                        if (it.current == HistoryTab) {
-                            IconButton(onClick = {
-                                if (it.current == HistoryTab) {
-                                    nav.push(DetailScreen())
+                    TopAppBar(
+                        title = { Text(text = it.current.options.title,
+                            color = MaterialTheme.colorScheme.onPrimary) },
+                        actions = {
+                            if (it.current == HistoryTab) {
+                                IconButton(onClick = {
+                                    if (it.current == HistoryTab) {
+                                        nav.push(DetailScreen())
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Add,
+                                        contentDescription = "add",
+                                        tint = MaterialTheme.colorScheme.onPrimary
+                                    )
                                 }
-                            }) {
-                                Icon(imageVector = Icons.Default.Add, contentDescription = "add")
                             }
-                        }
-                    })
+                        }, backgroundColor = MaterialTheme.colorScheme.primary
+                    )
                 },
                 content = {
                     CurrentTab()
                 },
                 bottomBar = {
-                    BottomNavigation {
+                    BottomNavigation(backgroundColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary) {
                         TabNavigationItem(HistoryTab)
                         TabNavigationItem(NetTab)
                         TabNavigationItem(SettingTab)

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -70,6 +71,7 @@ public data class DetailScreen(val id: Long = -1) : BaseScreen() {
 
         Scaffold(topBar = {
             TopAppBar(
+                backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
                 title = {},
                 navigationIcon = {
                     IconButton(
@@ -77,6 +79,7 @@ public data class DetailScreen(val id: Long = -1) : BaseScreen() {
                             nav.pop()
                         }) {
                         Icon(
+                            tint = androidx.compose.material3.MaterialTheme.colorScheme.onPrimary,
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "back"
                         )
@@ -84,19 +87,30 @@ public data class DetailScreen(val id: Long = -1) : BaseScreen() {
                 }, actions = {
                     Button(modifier = Modifier
                         .size(width = 80.dp, height = 36.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor =
+                            androidx.compose.material3.MaterialTheme.colorScheme.secondaryContainer
+                        ),
                         onClick = {
                             _noteData.value = _noteData.value.copy(lastTime = getNowTime())
                             model.setEvent(DetailContract.Event.onSaveNote(_noteData.value))
                         }) {
-                        Text("保存", fontStyle = MaterialTheme.typography.h5.fontStyle)
+                        Text(
+                            "保存",
+                            fontStyle = MaterialTheme.typography.h5.fontStyle,
+                            color = androidx.compose.material3.MaterialTheme.colorScheme.onSecondaryContainer
+                        )
                     }
                 })
         }, floatingActionButton = {
             if (id != -1L) {
                 FloatingActionButton(onClick = {
                     model.setEvent(DetailContract.Event.onDeleteNote(id))
-                }) {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = "delete")
+                }, backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.secondaryContainer) {
+                    Icon(
+                        imageVector = Icons.Default.Delete, contentDescription = "delete",
+                        tint = androidx.compose.material3.MaterialTheme.colorScheme.onSecondaryContainer
+                    )
                 }
             }
         }) {
@@ -114,7 +128,11 @@ public data class DetailScreen(val id: Long = -1) : BaseScreen() {
                         LaunchedEffect(Unit) {
                             _noteData.value = it
                         }
-                        Column(modifier = Modifier.fillMaxSize(1f)) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize(1f)
+                                .background(androidx.compose.material3.MaterialTheme.colorScheme.background)
+                        ) {
                             TextField(
                                 label = { Text(text = "title") },
                                 value = noteDataState.value.name,
@@ -132,7 +150,8 @@ public data class DetailScreen(val id: Long = -1) : BaseScreen() {
                             Text(
                                 text = if (_noteData.value.lastTime.isEmpty()) {
                                     "Time:${getNowTime()}"
-                                } else _noteData.value.lastTime
+                                } else _noteData.value.lastTime,
+                                modifier = Modifier.padding(start = 5.dp)
                             )
                             TextField(
                                 label = { Text(text = "content") },

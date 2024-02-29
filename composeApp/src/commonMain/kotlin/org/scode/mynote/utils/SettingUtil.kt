@@ -6,7 +6,7 @@ import com.russhwolf.settings.get
 object SettingUtil {
     val instance = createSettings()
 
-    suspend fun put(key: String, value: Any) {
+    fun put(key: String, value: Any) {
         when (value) {
             is Int -> instance.putInt(key, value)
             is String -> instance.putString(key, value)
@@ -17,17 +17,27 @@ object SettingUtil {
         }
     }
 
-    suspend fun get(key: String, tempValue: Any): Any {
-        when (tempValue) {
+    fun get(key: String, tempValue: Any): Any {
+        val value = when (tempValue) {
             is Int -> return instance.get(key, tempValue)
             is String -> return instance.get(key, tempValue)
             is Long -> return instance.get(key, tempValue)
             is Float -> return instance.get(key, tempValue)
-            is Double -> return instance.get(key, tempValue)
             is Boolean -> return instance.get(key, tempValue)
+            is Double -> return instance.get(key, tempValue)
+            else -> {
+                tempValue
+            }
         }
-        return tempValue
+        return value
     }
 }
 
 expect fun createSettings(): Settings
+
+
+//存储键
+object SettingKey {
+    val themeType = "themeType";
+    val isDark = "isDark";
+}
