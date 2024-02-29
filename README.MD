@@ -3,8 +3,8 @@
 
 
 
-![image](https://github.com/993739033/MyNote/tree/main/picture/1.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/2.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/3.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/4.png)
-![image](https://github.com/993739033/MyNote/tree/main/picture/5.png)
+![image](https://github.com/993739033/MyNote/tree/main/picture/p1.png)
+![image](https://github.com/993739033/MyNote/tree/main/picture/p2.png)
+![image](https://github.com/993739033/MyNote/tree/main/picture/p3.png)
+![image](https://github.com/993739033/MyNote/tree/main/picture/p4.png)
+![image](https://github.com/993739033/MyNote/tree/main/picture/p5.png)
